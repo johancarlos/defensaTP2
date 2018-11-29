@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>vista post selecionado</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+
+<h1>Posts SELECCIONADO</h1>
+
+ <b>LINK</b><p th:text="${post.link}"></p>
+ <b>TEXTO</b><p th:text="${post.text}"></p>
+ <h2>Comentarios:</h2>
+ <div th:each="comment:${post.comments}">
+
+    <span th:text="${comment.text}"></span><br>
+    <b th:text="${comment.likes}">LIKE:  </b><br>
+     <a th:href="${'/commentlike/' + comment.id + '/' + post.id + '/' + uid}">likeuser</a>
+     <a th:href="${'/commentdislike/' + comment.id + '/' + post.id + '/' + uid}">dislikeUSER</a>
+ </div>
+<br>
+<p>Add comentario:</p>
+<form action="/comment" method="POST">
+    <input type="hidden" name="post" th:value="${post.id}">
+    <textarea name="text" id="text" cols="50" rows="2"></textarea>
+    <br>
+    <input type="submit" class="btn btn-info" value="COMENTAR">
+    <a href="/welcome" class="btn btn-warning">VOLVER</a>
+    <br>
+    <input type="hidden" name="value1" id="value1" th:value="${uid}"/>
+</form>
+</body>
+</html>
