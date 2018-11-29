@@ -3,8 +3,11 @@ package com.ucbcba.logindemo.controllers;
 import com.ucbcba.logindemo.entities.Category;
 import com.ucbcba.logindemo.entities.Post;
 import com.ucbcba.logindemo.entities.User;
+import com.ucbcba.logindemo.entities.UserReport;
+import com.ucbcba.logindemo.repositories.UserReportRepository;
 import com.ucbcba.logindemo.services.CategoryService;
 import com.ucbcba.logindemo.services.PostService;
+import com.ucbcba.logindemo.services.UserReportService;
 import com.ucbcba.logindemo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -132,6 +135,17 @@ public class PostController {
         }
         return "redirect:/welcome";
     }
+
+    @RequestMapping("/post/report/{id}/{uid}")
+    public String reportPost(@PathVariable Integer id, @PathVariable Integer uid, Model model) {
+        UserReport rp = new UserReport();
+        rp.setPost(id);
+        rp.setUser(id);
+        postService.findPost(id).setUserReport(1);
+        UserReportRepository.saveReport();
+        return "redirect:/welcome";
+    }
+
 
 
 

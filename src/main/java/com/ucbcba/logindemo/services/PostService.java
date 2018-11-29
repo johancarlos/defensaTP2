@@ -7,6 +7,8 @@ public interface PostService {
 
     void createPost(Post post);
 
+    int getPostReport(Integer id);
+
     Post findPost(Integer id);
 
     void savePost(Post post);

@@ -1,8 +1,11 @@
 package com.ucbcba.logindemo.services;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.ucbcba.logindemo.entities.Post;
 import com.ucbcba.logindemo.entities.User;
+import com.ucbcba.logindemo.entities.UserReport;
 import com.ucbcba.logindemo.repositories.PostRepository;
+import com.ucbcba.logindemo.repositories.UserReportRepository;
 import com.ucbcba.logindemo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,11 +17,14 @@ import java.util.Optional;
 
 @Service
 public class PostServiceImpl implements PostService {
-
+    @Autowired
     PostRepository postRepository;
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserReportRepository userReportRepository;
 
     @Autowired
     @Qualifier(value = "postRepository")
@@ -65,6 +71,18 @@ public class PostServiceImpl implements PostService {
 
         return "ANONYMUS";
     }
+
+    @Override
+    public int getPostReport(Integer id){
+        List<UserReport> reportList = userReportRepository.findAll();
+        for (UserReport ur:
+            reportList){
+            if (ur.getId() == id)
+                return ur.getReported();
+        }
+        return id;
+    }
+
 
     @Override
     public Post findPost(Integer id){
